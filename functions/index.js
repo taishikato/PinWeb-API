@@ -7,16 +7,19 @@ const router = new Router()
 const admin = require('firebase-admin')
 const cors = require('koa2-cors');
 
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  allowMethods: ['POST']
+}))
 app.use(router.routes())
 app.use(router.allowedMethods())
 
 admin.initializeApp(functions.config().firebase)
 
-router.get('/s/:id', async (ctx) => {
+router.post('/getImageUrl', async (ctx) => {
   ctx.response.status = 200
   ctx.body = {
-    message: ctx.params.id
+    message: 'takato sensei'
   }
 })
 
