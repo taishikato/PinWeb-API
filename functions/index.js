@@ -5,7 +5,9 @@ const app = new Koa()
 const Router = require('koa-router')
 const router = new Router()
 const admin = require('firebase-admin')
+const cors = require('koa2-cors');
 
+app.use(cors())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
@@ -18,4 +20,4 @@ router.get('/s/:id', async (ctx) => {
   }
 })
 
-exports.func = functions.https.onRequest(koaFirebase(app))
+exports.apifunc = functions.https.onRequest(koaFirebase(app))
