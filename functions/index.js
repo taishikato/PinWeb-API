@@ -1,36 +1,22 @@
 const functions = require('firebase-functions')
-const koaFirebase = require('koa-firebase-functions')
-const Koa = require('koa')
-const app = new Koa()
-const Router = require('koa-router')
-const router = new Router()
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const app = express()
 const admin = require('firebase-admin')
-const cors = require('@koa/cors');
-const bodyParser = require('koa-bodyparser');
-
-app.use(cors({
-  origin: '*',
-  allowMethods: ['POST'],
-  allowHeaders: '*',
-  exposeHeaders: '*'
-}))
-app.use(bodyParser())
-app.use(router.routes())
-app.use(router.allowedMethods())
-
 admin.initializeApp(functions.config().firebase)
 
-router.post('/getImageUrl', async (ctx) => {
+app.use(cors())
+app.use(bodyParser())
+
+app.post('/getImageUrl', (req, res) => {
   console.log('request body')
-  console.log(ctx.request.body)
+  console.log(req.body)
   // TODO: Upload a image to firebase storage
   // TODO: Get a download URL of the image
   // TODO: return it
-  ctx.response.status = 200
-  ctx.body = {
-    message: 'takato sensei'
-  }
-  return
+  return res.json({ message: 'takato sensei' })
 })
 
-exports.apifunc = functions.https.onRequest(koaFirebase(app))
+// exports.apifunc = functions.https.onRequest(koaFirebase(app))
+exports.apifunc = functions.https.onRequest(app)
