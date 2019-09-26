@@ -1,4 +1,4 @@
-const validate = ((req, res) => {
+const validate = ((req, res, next) => {
   if (req.body.image === undefined || req.body.image === '') {
     res.status = 400
     return res.json({
@@ -6,6 +6,7 @@ const validate = ((req, res) => {
       message: 'The image parameter is missing'
     })
   }
+  return next()
 })
 
 module.exports = validate

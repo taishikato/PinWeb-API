@@ -38,8 +38,12 @@ app.post('/getImageUrl', validate, (req, res) => {
       })
     } catch (err) {
       console.log(`Error occured: ${err}`)
+      return res.json({
+        status: 'error',
+        message: err
+      })
     }
-  })();
+  })()
 })
 
 exports.apifunc = functions.https.onRequest(app)
