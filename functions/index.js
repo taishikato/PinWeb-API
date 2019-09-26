@@ -1,6 +1,7 @@
 const functions = require('firebase-functions')
 const express = require('express')
 const bodyParser = require('body-parser')
+const validate = require('./middleware/validate')
 const cors = require('cors')
 const uuid = require('uuid/v4')
 const app = express()
@@ -10,10 +11,8 @@ admin.initializeApp(functions.config().firebase)
 app.use(cors())
 app.use(bodyParser())
 
-app.post('/getImageUrl', (req, res) => {
-  console.log('request body')
-  console.log(req.body)
-  // TODO: Upload a image to firebase storage
+app.post('/getImageUrl', validate, (req, res) => {
+  // Upload the image to firebase storage
   const bucket = admin.storage().bucket()
   // Cut the first 23 strings(data:image/jpeg;base64,)
   const base64Data = req.body.image.slice(22)
@@ -23,18 +22,18 @@ app.post('/getImageUrl', (req, res) => {
     .split('-')
     .join('')
   const file = bucket.file(`images/${fileName}.jpeg`);
-  // TODO: Get a download URL of the image
   (async () => {
     try {
       await file.save(imageByteArray, { metadata: { contentType: 'image/jpeg', } })
+      // Get the download URL of the image
       const urls = await file.getSignedUrl({
         action: 'read',
         expires: '03-09-2500'
       })
       const url = urls[0]
       console.log(`Image url = ${url}`)
-      // TODO: return it
       return res.json({
+        status: 'success',
         image: url
       })
     } catch (err) {
