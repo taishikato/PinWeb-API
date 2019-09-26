@@ -32,15 +32,17 @@ app.post('/getImageUrl', validate, (req, res) => {
       })
       const url = urls[0]
       console.log(`Image url = ${url}`)
+      res.status = 200
       return res.json({
         status: 'success',
         image: url
       })
     } catch (err) {
       console.log(`Error occured: ${err}`)
+      res.status = 500
       return res.json({
         status: 'error',
-        message: err
+        message: 'System error'
       })
     }
   })()
