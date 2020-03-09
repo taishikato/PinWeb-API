@@ -25,10 +25,17 @@ Check out the repository for the frontend: [taishikato/PinWeb](https://github.co
 
 </div>
 
-## :man_shrugging: Why I created this app
+## :man_shrugging: Why I created this app?
 
 I saved the image on Pinterest when I find a cool website. I usually take a screenshot and then add it to Pinterest.<br />
 I want to make the process short, thus I made PinWeb.
+
+## :gear: How does it work?
+It's so simple.<br />
+When the user clicks the "Pin This Web" button, it calls the API with JavaScript Fetch API to upload the image to Firebase Cloud Storage and gets the URL of the image.<br />
+After that, it opens a new window to show the users the board of Pinterest.
+
+<img width="400" alt="PinWeb Demo" src="https://user-images.githubusercontent.com/980588/76181385-1982d680-617e-11ea-9baa-85f906b27e3b.gif" />
 
 ## :hammer_and_wrench: Stack
 
